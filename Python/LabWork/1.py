@@ -15,8 +15,11 @@ average_marks = float(total_marks/5)
 print(f"Student name : {name}")
 print(f"Course : {course}")
 print(f"Semester : {semester}")
+
 print("Marks obtained :")
+
 for i in range(5):
     print(f"Subject-{i+1} : {marks[i]}")
+
 print(f"Total Marks : {total_marks}")
 print(f"Average : {average_marks}")

@@ -3,3 +3,4 @@
 str = input("Enter the string : ")
 count = str.count(' ')
 print(f"The '{str}' contains {count} spaces.")
+

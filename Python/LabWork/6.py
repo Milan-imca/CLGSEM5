@@ -12,5 +12,3 @@ elif n2 > n1:
         print(f"{n2} is greater than {n1} and {n3}")
     else:
         print(f"{n3} is greater than {n1} and {n2}")
-
-        
