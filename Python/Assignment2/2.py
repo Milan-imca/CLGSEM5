@@ -1,5 +1,5 @@
 #  2. WAP that accepts time value in integer (24 hour format). If time entered is less than 12, pring “Good
-#  Morning” else if time entered is between 12 to 4, print “Good Afternoon” else if time is between 4 to 8
+#  Morning” else if time entered is between 12 to 4(16), print “Good Afternoon” else if time is between 4(16) to 8(20)
 #  print “Good Night”.
 
 

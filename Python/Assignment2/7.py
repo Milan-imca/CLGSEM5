@@ -16,14 +16,15 @@ choice = int(input("Enter choice : "))
 
 if choice == 1:
     num = int(input("Enter a number : "))
-    is_Prime = False
-
+    is_Prime = True
+    # 7
+    # 4
     if num == 1:
         print("1 is not a prime number")
     elif num > 1:
         for i in range(2,num):
             if (num % i == 0):
-                is_Prime == True
+                is_Prime == False
                 break
     if is_Prime:
         print(f"{num} is prime number")

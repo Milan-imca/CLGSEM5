@@ -8,10 +8,11 @@ units Rs 10 rupees per unit
 units = int(input("Enter the units consumed : "))
 total_bill = 0
 if units  <= 100 :
-    total_bill = 0
+    total_bill = 0 
 elif units > 100 and units <= 200:
     total_bill = units * 5
 elif units > 200:
     total_bill = units * 10 
 
 print(f"Electricity Bill : {total_bill}")
+
