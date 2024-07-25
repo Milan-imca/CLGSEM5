@@ -25,7 +25,7 @@ listOfFruits = list(fruits)
 print(f"The list of fruits : {listOfFruits}")
 listOfFruits.append('kiwi')
 print(f"Added new fruit : {listOfFruits}")
-
+        
 
 # convert the listOfFruits back to a tuple
 tupleOfFruits = tuple(listOfFruits)
