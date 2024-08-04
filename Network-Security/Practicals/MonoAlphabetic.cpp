@@ -42,7 +42,7 @@ string decrypt(string cipherText,char key[]){
 
 int main(){
 
-  string plaintext = "HELLO";
+  string plaintext = "hello";
   string encryptedText;
   string decryptedText;
   char key[26] = {'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'm', 'l', 'k', 'j', 'i', 'h', 'g', 'f', 'e', 'd', 'c', 'b', 'a'};
