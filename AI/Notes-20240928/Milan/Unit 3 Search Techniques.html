@@ -1,0 +1,735 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Unit 3 Search Techniques</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-default_background {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-transparentGray { background-color: rgba(227, 226, 224, 0); }
+.select-value-color-translucentGray { background-color: rgba(0, 0, 0, 0.06); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="10f394ea-02d1-8017-be69-f86470c92ba1" class="page sans"><header><h1 class="page-title">Unit 3 Search Techniques</h1><p class="page-description"></p></header><div class="page-body"><p id="10f394ea-02d1-8090-b6c7-ee336f7de60a" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="10f394ea-02d1-8041-87e0-e4bca66038f2"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><p id="10f394ea-02d1-8077-9335-cc2565ab2879" class=""><strong>Topics:</strong></p><p id="10f394ea-02d1-8053-9b46-f113c60b68d1" class=""><strong>Uninformed Search</strong><div class="indented"><p id="ea1f8dce-2ca9-4473-be1d-9d7affdfa6ba" class="">→Breadth First Search</p><p id="a73ff40d-6883-468e-8734-456a9daec601" class="">→Depth First Search</p><p id="a670b036-f62a-4a82-b1a3-a2f5d9707df2" class="">→Depth Limited Search</p><p id="11112da4-21ca-472f-92b0-169156c13cbe" class="">→Bidirectional Search</p></div></p><p id="10f394ea-02d1-8053-9e2e-cebcc88f3686" class=""><strong>Informed (Heuristic) Search</strong><div class="indented"><p id="ae89fd33-27db-4200-bdef-5ef0a94a5dfe" class="">→Greedy Best First Search</p><p id="9267901c-a970-4ec4-bf79-479f7004fb80" class="">→A* Search</p><p id="8d0f9a49-da3d-47ea-9f81-4dffbd711dde" class="">→Hill Climbing Search</p></div></p><p id="10f394ea-02d1-8009-ae68-c5047b7d186e" class=""><strong>Adversarial Search</strong><div class="indented"><p id="7bcbe15e-f90a-41aa-96c0-5596221b400b" class="">→ Minmax Algorithm</p><p id="1802f650-a4c0-4bbe-bb90-5e72bd2ebe51" class="">→Alpha Beta Pruning</p></div></p></div></figure><p id="10f394ea-02d1-80c6-8ba0-d22f0360e0ce" class="">
+</p><p id="10f394ea-02d1-8002-8850-f3cbb773353e" class="">
+</p><h1 id="10f394ea-02d1-804d-87aa-e5b50122e92a" class=""><span style="border-bottom:0.05em solid">Search in AI</span></h1><ul id="10f394ea-02d1-8094-af3c-c8e43bcc2dc4" class="bulleted-list"><li style="list-style-type:disc">Search is a commonly used method in Artificial Intelligence for  solving problems.</li></ul><ul id="10f394ea-02d1-80fd-9ed1-cd9fd776e122" class="bulleted-list"><li style="list-style-type:disc">The search technique explores the possible moves that one can  make in a space of ‘states’, called the search space.</li></ul><ul id="10f394ea-02d1-8030-a34d-cb0e022acb64" class="bulleted-list"><li style="list-style-type:disc"><strong> Two important states</strong> are:<ul id="10f394ea-02d1-8064-a00d-dbcd629bf30a" class="bulleted-list"><li style="list-style-type:circle"> The<strong> start </strong>state, which embodies the ‘<strong>current state of affairs</strong>’.</li></ul><ul id="10f394ea-02d1-809c-8842-de1d120e3841" class="bulleted-list"><li style="list-style-type:circle"> The <strong>goal </strong>state, which embodies the ‘<strong>desired state of affairs</strong>’.</li></ul></li></ul><ul id="10f394ea-02d1-80ee-b876-f966d3437362" class="bulleted-list"><li style="list-style-type:disc">‘<strong>Operators</strong>’ allow <strong>one to move between states.</strong></li></ul><ul id="10f394ea-02d1-807d-b305-efba4e56cdd2" class="bulleted-list"><li style="list-style-type:disc">In search, one tries to find a path from start state to goal state.</li></ul><ul id="10f394ea-02d1-806c-9ff0-f67835d6ee8e" class="bulleted-list"><li style="list-style-type:disc">There can be one or many solutions to a given problem,  depending on the scenario, as there can be many ways to solve  that problem. Think about how do you approach a problem.</li></ul><ul id="10f394ea-02d1-80d4-9225-ced3bf50e611" class="bulleted-list"><li style="list-style-type:disc">Lets say you need to do something straight forward like a math multiplication. Clearly there is one correct solution, but we  have many algorithms to multiply, depending on the size of the input.</li></ul><ul id="10f394ea-02d1-8053-804a-e2dc25636c3a" class="bulleted-list"><li style="list-style-type:disc">Now, take a more complicated problem, like playing a game.</li></ul><ul id="10f394ea-02d1-80ef-b1d2-dda080288a50" class="bulleted-list"><li style="list-style-type:disc">In most of these games, at a given point in time, you have  multiple moves that you can make, and you choose the one  that gives you best possible outcome.</li></ul><ul id="10f394ea-02d1-808f-b123-d72f42462c99" class="bulleted-list"><li style="list-style-type:disc">In this scenario, there is no one correct solution, but there is  a best possible solution, depending on what you want to  achieve. Also, there are multiple ways to approach the problem,  based on what strategy you choose to have for your game  play.</li></ul><ul id="10f394ea-02d1-80a2-b004-dee8afc5ecf7" class="bulleted-list"><li style="list-style-type:disc">Searching falls under Artificial Intelligence (AI).</li></ul><ul id="10f394ea-02d1-80f8-af9d-fb8c42a93c2a" class="bulleted-list"><li style="list-style-type:disc">A major goal of AI is to give computers the ability to think, or in other words, mimic human behavior. </li></ul><ul id="10f394ea-02d1-8015-a4fb-cba5075a05c9" class="bulleted-list"><li style="list-style-type:disc">The problem is, unfortunately, computers don&#x27;t function in the same way our minds do.</li></ul><ul id="10f394ea-02d1-80a5-a8e2-e443486eaf07" class="bulleted-list"><li style="list-style-type:disc">They require a series of well-reasoned out steps before finding a solution.</li></ul><p id="10f394ea-02d1-80a1-9b80-e28501df6e4c" class="">
+</p><p id="10f394ea-02d1-806b-96c5-da8fc3669aa3" class="">
+</p><h1 id="10f394ea-02d1-807b-be23-d2d028c63c8f" class=""><span style="border-bottom:0.05em solid">Search Algorithm Terminologies</span></h1><ul id="110394ea-02d1-808f-8d89-e8f99614689a" class="bulleted-list"><li style="list-style-type:disc"><strong>Search</strong>: Searching is a step by step procedure to solve a search-problem in a given search space. A search problem can have three main factors:<ul id="110394ea-02d1-803d-9987-ff975f015747" class="bulleted-list"><li style="list-style-type:circle">Search Space: Search space represents set of all possible outcomes, which a system may have.</li></ul><ul id="110394ea-02d1-806c-81ab-ddec421e7c89" class="bulleted-list"><li style="list-style-type:circle">Start State: It is state from where agent begins the search.</li></ul><ul id="110394ea-02d1-8077-8657-f555a252bfc5" class="bulleted-list"><li style="list-style-type:circle">Goal State: It is a function which observe the current state and returns whether the goal state is achieved or not.</li></ul></li></ul><ul id="110394ea-02d1-80fc-9093-cc26b7c57789" class="bulleted-list"><li style="list-style-type:disc"><strong>Search Tree</strong>: A tree representation of search problem is called Search tree. The root of the search tree is the root node which is corresponding to the initial state.</li></ul><ul id="110394ea-02d1-80e5-9e66-e93cd4443643" class="bulleted-list"><li style="list-style-type:disc"><strong>Actions</strong>: It gives description of all the available actions to the agent.</li></ul><ul id="110394ea-02d1-809e-89a7-c91b149d3058" class="bulleted-list"><li style="list-style-type:disc"><strong>Transition Model: </strong>A description of what each action do, can be represented as a transition model.</li></ul><ul id="110394ea-02d1-8084-a2aa-d9cb5a07b050" class="bulleted-list"><li style="list-style-type:disc"><strong>Path Cost : </strong>It is a function which assigns numeric cost to each path.</li></ul><ul id="110394ea-02d1-805c-833c-f5d28d0a6324" class="bulleted-list"><li style="list-style-type:disc"><strong>Solution: </strong>It is a action sequence which lead from start node to goal node.</li></ul><ul id="110394ea-02d1-80a5-910e-f941dca36661" class="bulleted-list"><li style="list-style-type:disc"><strong>Optimal Solution: </strong>If a solution has the lowest cost among  all solutions.</li></ul><p id="110394ea-02d1-8014-998f-e1d3b66e4516" class="">
+</p><h1 id="110394ea-02d1-8074-a1e6-f7d0912dc038" class=""><span style="border-bottom:0.05em solid">Properties of Search Algorithm</span></h1><ul id="110394ea-02d1-8006-a197-ed4103601aa8" class="bulleted-list"><li style="list-style-type:disc"><strong>Completeness</strong>:  A search algorithm is said to be complete if it guarantees to return a solution if at least any solution exits for any random input.</li></ul><ul id="110394ea-02d1-80cd-a73e-c085ecaa4f0a" class="bulleted-list"><li style="list-style-type:disc"><strong>Optimality</strong>: If a solution found for an algorithm is guaranteed to be the best solution(lowest path cost) among all the other solutions, then such a solution is said to be an optimal solution.</li></ul><ul id="110394ea-02d1-80f8-a49f-db2938b1c5b1" class="bulleted-list"><li style="list-style-type:disc"><strong>Time Complexity:</strong> Time Complexity is a measure of time for an algorithm to complete its task.</li></ul><ul id="110394ea-02d1-8019-96f0-c0cb52c0e101" class="bulleted-list"><li style="list-style-type:disc"><strong>Space Complexity</strong>: It is the maximum storage space required at any point during the search, as the complexity of the problem.</li></ul><p id="110394ea-02d1-80cc-a21c-ff0821d22d57" class="">
+</p><h1 id="110394ea-02d1-806d-8532-ce2a98274d4a" class=""><span style="border-bottom:0.05em solid">Types of Search Algorithm:</span></h1><p id="110394ea-02d1-80a6-86e5-da426ecc4e0e" class="">Based on the search problems we can classify the search algorithms into:</p><ol type="1" id="110394ea-02d1-8070-920d-e7987386ce04" class="numbered-list" start="1"><li><strong>Uninformed Search </strong>( Blind Search)</li></ol><ol type="1" id="110394ea-02d1-8023-90b7-d06b8f42fb87" class="numbered-list" start="2"><li><strong>Informed Search </strong>(Heuristic Search)</li></ol><p id="110394ea-02d1-80ab-b016-ff75d742b7dc" class=""><div class="indented"><p id="110394ea-02d1-8096-8311-da97e9260bee" class="">
+</p></div></p><p id="110394ea-02d1-80cb-ade9-d112826e8209" class="">
+</p><h3 id="110394ea-02d1-8030-8278-e1fa894ed869" class=""><strong>Search Algorithm</strong></h3><div id="110394ea-02d1-8069-8f06-fee08e258545" class="column-list"><div id="110394ea-02d1-80a0-9aaf-c6bbfa8121a9" style="width:100%" class="column"><p id="110394ea-02d1-802f-8d9e-fc928405593f" class=""><strong>Uninformed/Blind Search</strong></p><ol type="1" id="110394ea-02d1-8029-b261-f40b7a47a6a8" class="numbered-list" start="1"><li>Breadth First Search</li></ol><ol type="1" id="110394ea-02d1-8012-b351-fc207bc6c06e" class="numbered-list" start="2"><li>Uniform Cost Search</li></ol><ol type="1" id="110394ea-02d1-80c7-826b-caea40bb9882" class="numbered-list" start="3"><li>Depth First Search</li></ol><ol type="1" id="110394ea-02d1-80ee-9fde-d69a05a3a586" class="numbered-list" start="4"><li>Depth Limited Search</li></ol><ol type="1" id="110394ea-02d1-803c-a912-eebac0ee3207" class="numbered-list" start="5"><li>Iterative deepening depth first search</li></ol><ol type="1" id="110394ea-02d1-80ed-bff0-ebacc6a565ef" class="numbered-list" start="6"><li>Bidirectional Search</li></ol></div><div id="110394ea-02d1-8091-8059-cf7a4ce1a121" style="width:100%" class="column"><p id="110394ea-02d1-80eb-85f8-c7ae50a80f71" class=""><strong>Informed Search</strong></p><ol type="1" id="110394ea-02d1-8027-962b-df0719919fce" class="numbered-list" start="1"><li>Greedy Search</li></ol><ol type="1" id="110394ea-02d1-8013-84e2-e72a6acd35d4" class="numbered-list" start="2"><li>A* Search</li></ol><ol type="1" id="110394ea-02d1-80ab-942f-e43e834d5cd8" class="numbered-list" start="3"><li>Graph Search</li></ol></div></div><p id="110394ea-02d1-8021-ad7f-c864af8ca1f7" class="">
+</p><p id="110394ea-02d1-80b5-ae68-f6ce5d1765fd" class="">
+</p><div id="110394ea-02d1-80a0-b637-ccb7e625d14b" class="column-list"><div id="2d8d6c50-3253-4954-a88e-c0362908e402" style="width:50%" class="column"><h3 id="110394ea-02d1-80cc-ad48-d9812ea3a22f" class=""><strong>Uninformed Search/Blind Search</strong></h3><ul id="110394ea-02d1-80f5-91f7-f108bc1ed7c7" class="bulleted-list"><li style="list-style-type:disc"> This type of search<strong> does not use any domain knowledge.</strong></li></ul><ul id="110394ea-02d1-8069-a716-c9ec4729ec4e" class="bulleted-list"><li style="list-style-type:disc">This means that it does not use any information that helps to reach the goal, like closeness or location of the goal.</li></ul><ul id="110394ea-02d1-8067-9b16-ec260d23319c" class="bulleted-list"><li style="list-style-type:disc">The strategies or algorithms, using this form of search, ignore  where they are going until they find a goal and report success.</li></ul><ul id="110394ea-02d1-80e4-866c-eabc03be07b1" class="bulleted-list"><li style="list-style-type:disc">In this search, total search space is looked for the solution.</li></ul><ul id="110394ea-02d1-80d8-9a06-ca678d005ac1" class="bulleted-list"><li style="list-style-type:disc">Uniformed search applies a way in which search tree is searched without any information about search space like initial state operators and test for the goal, so it is also called blind search.</li></ul><ul id="110394ea-02d1-8091-a903-e8bab4f8ffbb" class="bulleted-list"><li style="list-style-type:disc">It examines each node of the tree until it achieves the goal node.</li></ul><p id="110394ea-02d1-80a5-8d9d-f40f0d228485" class="">
+</p></div><div id="229b0604-2ebd-498e-a22a-d0a84e40b768" style="width:50%" class="column"><h3 id="110394ea-02d1-80c6-8277-edbb69de6cd8" class=""><strong>Informed Search/ Heuristic Search</strong></h3><ul id="110394ea-02d1-8037-97ee-db4f445db3bc" class="bulleted-list"><li style="list-style-type:disc">This type of search uses domain knowledge.</li></ul><ul id="110394ea-02d1-8095-a654-e11646799651" class="bulleted-list"><li style="list-style-type:disc"> Problem information is available which can guide the search.</li></ul><ul id="110394ea-02d1-804f-889d-cb3bf56525bc" class="bulleted-list"><li style="list-style-type:disc">Informed search strategies can find a solution more efficiently than an  uninformed search strategy.</li></ul><ul id="110394ea-02d1-8069-a49c-c7def2437829" class="bulleted-list"><li style="list-style-type:disc">Informed search is also called a Heuristic Search.</li></ul><ul id="110394ea-02d1-80ee-a378-c3cffaeab501" class="bulleted-list"><li style="list-style-type:disc">A heuristic is a way which might not always be guaranteed for best  solutions but guaranteed to find a good solution in reasonable time. </li></ul><ul id="110394ea-02d1-80a6-91dc-e3443b3ed770" class="bulleted-list"><li style="list-style-type:disc">It generally uses a heuristic function that estimates how close a state is to the goal.</li></ul><ul id="110394ea-02d1-80d4-9576-e40505f3cad4" class="bulleted-list"><li style="list-style-type:disc">This heuristic need not be perfect. This function is used to estimate the cost from a state to the closest goal.</li></ul><p id="110394ea-02d1-8080-8f54-fd9ba16042a1" class="">
+</p></div></div><h1 id="110394ea-02d1-80d8-86a7-e4a90d584012" class=""><span style="border-bottom:0.05em solid">Types of Heuristic Search</span></h1><ul id="110394ea-02d1-8043-8816-e1554e77e734" class="bulleted-list"><li style="list-style-type:disc"><strong>Generate and test</strong></li></ul><ul id="110394ea-02d1-8058-8b01-da1e1912cb3f" class="bulleted-list"><li style="list-style-type:disc"><strong>Best first search (Greedy search)</strong></li></ul><ul id="110394ea-02d1-805e-896c-d971803e07ce" class="bulleted-list"><li style="list-style-type:disc"><strong>Hill-Climbing search</strong></li></ul><ul id="110394ea-02d1-8047-bf43-c4640f1b1823" class="bulleted-list"><li style="list-style-type:disc">Problem Reduction</li></ul><ul id="110394ea-02d1-8048-a06b-e046731ff7dd" class="bulleted-list"><li style="list-style-type:disc">Constraint Satisfaction</li></ul><ul id="110394ea-02d1-8019-86bf-cd10d379cf53" class="bulleted-list"><li style="list-style-type:disc">Means end analysis</li></ul><ul id="110394ea-02d1-805b-bdf5-db85d82c75e3" class="bulleted-list"><li style="list-style-type:disc">Min-max search</li></ul><p id="110394ea-02d1-808a-8811-eb71bbd17715" class="">
+</p><p id="110394ea-02d1-800a-acff-d31ecf1bed40" class="">
+</p><h1 id="110394ea-02d1-801b-a70c-d966b1c7a0d1" class=""><span style="border-bottom:0.05em solid">Informed Search Vs. Uninformed Search</span></h1><table id="110394ea-02d1-805a-82a0-f28cdbb341c8" class="simple-table"><tbody><tr id="110394ea-02d1-80e8-8989-cd4c955c31fe"><td id="xENa" class=""><strong>Parameters</strong></td><td id="U=Yh" class=""><strong>Informed Search</strong></td><td id="RMME" class=""><strong>Uninformed Search</strong></td></tr><tr id="110394ea-02d1-8028-a19a-ee4fe1e36abf"><td id="xENa" class="">Known as</td><td id="U=Yh" class="">It is also known as Heuristic Search.</td><td id="RMME" class="">It is also known as Blind Search.</td></tr><tr id="110394ea-02d1-8079-8c34-ea8e1440e0de"><td id="xENa" class="">Using Knowledge</td><td id="U=Yh" class="">It uses knowledge for the searching process.</td><td id="RMME" class="">It doesn’t use knowledge for the searching process.</td></tr><tr id="110394ea-02d1-8004-8240-cdf5f69ada23"><td id="xENa" class="">Performance</td><td id="U=Yh" class="">It finds a solution more quickly.</td><td id="RMME" class="">It finds solution slow as compared to an informed search.</td></tr><tr id="110394ea-02d1-80af-a45e-f1b37c4d2cea"><td id="xENa" class="">Completion</td><td id="U=Yh" class="">It may or may not be complete.</td><td id="RMME" class="">It is always complete.</td></tr><tr id="110394ea-02d1-800c-bf4d-d33c432f70dd"><td id="xENa" class="">Cost Factor</td><td id="U=Yh" class="">Cost is low.</td><td id="RMME" class="">Cost is high.</td></tr><tr id="110394ea-02d1-8022-aec3-ffa951130ff4"><td id="xENa" class="">Time</td><td id="U=Yh" class="">It consumes less time because of quick searching.</td><td id="RMME" class="">It consumes moderate time because of slow searching.</td></tr><tr id="110394ea-02d1-80b9-b6ad-e277ff550aad"><td id="xENa" class="">Direction</td><td id="U=Yh" class="">There is a direction given about the solution.</td><td id="RMME" class="">No suggestion is given regarding the solution in it.</td></tr><tr id="110394ea-02d1-8058-a2cd-c0ddd46edbfa"><td id="xENa" class="">Implementation</td><td id="U=Yh" class="">It is less lengthy while implemented.</td><td id="RMME" class="">It is more lengthy while implemented.</td></tr><tr id="110394ea-02d1-80c3-8ea9-ecf2272cf510"><td id="xENa" class="">Efficiency</td><td id="U=Yh" class="">It is more efficient as efficiency takes into account cost and performance. The incurred cost is less and speed of finding solutions is quick.</td><td id="RMME" class="">It is comparatively less efficient as incurred cost is more and the speed of finding the Breadth-First solution is slow.</td></tr><tr id="110394ea-02d1-800c-a893-f7001f7c96ee"><td id="xENa" class="">Computational requirements</td><td id="U=Yh" class="">Computational requirements are lessened.</td><td id="RMME" class="">Comparatively higher computational requirements.</td></tr><tr id="110394ea-02d1-80ab-ab9b-f6f22bbc12ce"><td id="xENa" class="">Size of search problems</td><td id="U=Yh" class="">Having a wide scope in terms of handling large search problems.</td><td id="RMME" class="">Solving a massive search task is challenging.</td></tr><tr id="110394ea-02d1-80f7-8323-db04fe0b4ce1"><td id="xENa" class="">Examples of Algorithms</td><td id="U=Yh" class="">• Greedy Search<br/>• A* Search<br/>• AO* Search<br/>• Hill Climbing Algorithm<br/></td><td id="RMME" class="">• Depth First Search (DFS)<br/>• Breadth First Search (BFS)<br/>• Branch and Bound<br/></td></tr></tbody></table><p id="116394ea-02d1-80dc-8685-fb68807f50ae" class="">
+</p><h1 id="116394ea-02d1-80f0-a7c8-c7a200ac02dd" class="">Uniformed Search</h1><h1 id="110394ea-02d1-80ad-b826-fd1190f9d66c" class=""><strong><span style="border-bottom:0.05em solid">Types of Uninformed Search</span></strong></h1><ul id="110394ea-02d1-8017-90ab-fd9fd39c31c2" class="bulleted-list"><li style="list-style-type:disc"><strong>BFS (Breadth First Search): </strong>It expands the shallowest node (node  having<br/>lowest depth) first.<br/></li></ul><ul id="110394ea-02d1-8023-b81a-e12d9fbd29d7" class="bulleted-list"><li style="list-style-type:disc"><strong>DFS (Depth First Search):</strong> It expands deepest node first.</li></ul><ul id="110394ea-02d1-80be-bd16-eb42366f850f" class="bulleted-list"><li style="list-style-type:disc"><strong>DLS (Depth Limited Search):</strong> It is DFS with a limit on depth.</li></ul><ul id="110394ea-02d1-80ca-850f-fe8ffc9c1fde" class="bulleted-list"><li style="list-style-type:disc"><strong>Bidirectional Search</strong></li></ul><p id="110394ea-02d1-80d8-b62a-e1b6fa5cf7b1" class="">
+</p><p id="110394ea-02d1-8044-87d1-eaa4897cb45c" class="">
+</p><h1 id="110394ea-02d1-807f-a12c-fce71a2a6e6c" class="">Breadth-first Search:</h1><figure id="116394ea-02d1-8032-840c-f7cbf29a9a53" class="image"><a href="image.png"><img style="width:336px" src="image.png"/></a></figure><ul id="110394ea-02d1-8057-94d0-e4a547a96a58" class="bulleted-list"><li style="list-style-type:disc">Breadth-first search is the most common search strategy for traversing a tree or graph. This algorithm searches breadthwise in a tree or graph, so it is called breadth-first search.</li></ul><ul id="110394ea-02d1-8064-a881-d2e6ce75dbfc" class="bulleted-list"><li style="list-style-type:disc">BFS algorithm starts searching from the root node of the tree and expands all successor node at the current level before moving to nodes of next level.</li></ul><ul id="110394ea-02d1-806e-b97b-de7d1a4129aa" class="bulleted-list"><li style="list-style-type:disc">The breadth-first search algorithm is an example of a general-graph search algorithm.</li></ul><ul id="110394ea-02d1-80f4-a367-cd5f1f062784" class="bulleted-list"><li style="list-style-type:disc">Breadth-first search implemented using FIFO queue data structure.</li></ul><ul id="116394ea-02d1-8065-9da4-d61fe893e66e" class="bulleted-list"><li style="list-style-type:disc"><strong>Time Complexity:</strong> Time Complexity of BFS algorithm can be obtained by the number of nodes traversed in BFS until the shallowest Node. Where the d= depth of shallowest solution and b is a node at every state.<br/>T (b) = 1+b2+b3+.......+ bd= O (bd).<br/></li></ul><ul id="116394ea-02d1-8081-a8e1-ce0e88135eb4" class="bulleted-list"><li style="list-style-type:disc"><strong>Space Complexity:</strong> Space complexity of BFS algorithm is given by the Memory size of frontier which is O(bd).</li></ul><ul id="116394ea-02d1-8094-8db3-d732e20ea5d1" class="bulleted-list"><li style="list-style-type:disc"><strong>Completeness</strong>: BFS is complete, which means if the shallowest goal node is at some finite depth, then BFS will find a solution.</li></ul><ul id="116394ea-02d1-80f8-90b7-fe3464f08924" class="bulleted-list"><li style="list-style-type:disc"><strong>Optimality</strong>: BFS is optimal if path cost is a non-decreasing function of the depth of the node.</li></ul><p id="116394ea-02d1-800c-8b02-e246f681c90f" class="">
+</p><p id="116394ea-02d1-804c-ac17-ff833dea36d5" class=""><strong>Advantages</strong>:</p><ul id="116394ea-02d1-80f0-8966-e2e22552bf66" class="bulleted-list"><li style="list-style-type:disc">BFS will provide a solution if any solution exists.</li></ul><ul id="116394ea-02d1-8019-85f4-d2d1cd2f08d1" class="bulleted-list"><li style="list-style-type:disc">If there are more than one solutions for a given problem, then BFS will provide the minimal solution which requires the least number of steps.</li></ul><p id="116394ea-02d1-8057-872b-c3e96947e961" class="">Disadvantages:</p><ul id="116394ea-02d1-80c9-9631-f3694ff6ba11" class="bulleted-list"><li style="list-style-type:disc">It requires lots of memory since each level of the tree must be saved into memory to expand the next level.</li></ul><ul id="116394ea-02d1-8042-b870-cb35938747e0" class="bulleted-list"><li style="list-style-type:disc">BFS needs lots of time if the solution is far away from the root node.</li></ul><p id="116394ea-02d1-80d1-a043-e991eb5ccf24" class="">
+</p><p id="116394ea-02d1-80c0-bcdb-eb0b1ab4add5" class="">
+</p><h1 id="116394ea-02d1-8054-96df-c1474c438f1a" class="">Depth-First Search</h1><ul id="116394ea-02d1-80fe-8686-f8cdf9cc4cf0" class="bulleted-list"><li style="list-style-type:disc">Depth-first search isa recursive algorithm for traversing a tree or graph data structure.</li></ul><ul id="116394ea-02d1-803d-a549-c96895804c42" class="bulleted-list"><li style="list-style-type:disc">It is called the depth-first search because it starts from the root node and<br/>follows each path to its greatest depth node before moving to the next path.<br/></li></ul><ul id="116394ea-02d1-804e-bd8d-df511bc59f8f" class="bulleted-list"><li style="list-style-type:disc">DFS uses a stack data structure for its implementation.</li></ul><ul id="116394ea-02d1-801e-8a95-c9c9ca71696d" class="bulleted-list"><li style="list-style-type:disc">The process of the DFS algorithm is similar to the BFS algorithm.</li></ul><ul id="116394ea-02d1-8054-8771-dee91218f607" class="bulleted-list"><li style="list-style-type:disc"><strong>Completeness</strong>: DFS search algorithm is complete within finite state space as it will expand every node within a limited search tree.</li></ul><ul id="116394ea-02d1-8055-9577-f935bf21dea8" class="bulleted-list"><li style="list-style-type:disc"><strong>Time Complexity: </strong>Time complexity of DFS will be equivalent to the node traversed by the algorithm. It is given by:<br/>T(n)= 1+ n2+ n3 +.........+ nm=O(nm)<br/>Where, m= maximum depth of any node and this can be much larger than d (Shallowest solution depth).<br/></li></ul><ul id="116394ea-02d1-80ed-819b-d30e16626c4b" class="bulleted-list"><li style="list-style-type:disc"><strong>Space Complexity</strong>: DFS algorithm needs to store only single path from the root node, hence space complexity of DFS is equivalent to the size of the fringe set, which is O(bm).</li></ul><ul id="116394ea-02d1-8020-853e-d074d069a21e" class="bulleted-list"><li style="list-style-type:disc"><strong>Optimal: </strong>DFS search algorithm is non-optimal, as it may generate a large number of steps or high cost to reach to the goal node.</li></ul><p id="116394ea-02d1-8035-b080-ff007342c1ae" class=""><strong>Advantages:</strong></p><ul id="116394ea-02d1-80b7-8b20-ff03310b0f09" class="bulleted-list"><li style="list-style-type:disc">DFS requires very less memory as it only needs to store a stack of the nodes on the path from root node to the current node.</li></ul><ul id="116394ea-02d1-80ca-a702-f2483eb36fb9" class="bulleted-list"><li style="list-style-type:disc">It takes less time to reach to the goal node than BFS algorithm (if it traverses in the right<br/>path).<br/></li></ul><p id="116394ea-02d1-80dc-b705-cb8bbcf647bd" class=""><strong>Disadvantages:</strong></p><ul id="116394ea-02d1-80d1-99fa-c1ba8ad05f32" class="bulleted-list"><li style="list-style-type:disc">There is the possibility that many states keep re-occurring, and there is no guarantee of finding the solution.</li></ul><ul id="116394ea-02d1-8099-a685-ecb299651288" class="bulleted-list"><li style="list-style-type:disc">DFS algorithm goes for deep down searching and sometime it may go to the infinite loop.</li></ul><p id="116394ea-02d1-8065-8e40-d965970a369d" class="">
+</p><p id="116394ea-02d1-8068-9aa7-dc3f0d822146" class="">
+</p><h1 id="116394ea-02d1-80d9-a570-f2ba04b89ad3" class="">Bidirectional Search</h1><ul id="116394ea-02d1-8065-ba0e-d67ea23bb65f" class="bulleted-list"><li style="list-style-type:disc">Bidirectional search algorithm runs two simultaneous searches, one<br/>form initial state called as forward-search and other from goal node<br/>called as backward-search, to find the goal node.<br/></li></ul><ul id="116394ea-02d1-806d-a0ed-dae91c285a93" class="bulleted-list"><li style="list-style-type:disc">Bidirectional search replaces one single search graph with two small<br/>subgraphs in which one starts the search from an initial vertex and<br/>other starts from goal vertex.<br/></li></ul><ul id="116394ea-02d1-8037-915a-c84c3bbd3abb" class="bulleted-list"><li style="list-style-type:disc">The search stops when these two graphs intersect each other.</li></ul><figure id="116394ea-02d1-80cf-baa8-f20dc797ecbe" class="image"><a href="image%201.png"><img style="width:384px" src="image%201.png"/></a></figure><p id="116394ea-02d1-80d2-b2b7-e43f4c5ec8ca" class="">This algorithm divides one graph/tree into two sub-graphs. It starts traversing from node 1 in the forward direction and starts from goal node 16 in the backward direction. The algorithm terminates at node 9 where two searches meet.</p><ul id="116394ea-02d1-8059-b681-f10676338f5c" class="bulleted-list"><li style="list-style-type:disc"><strong>Completeness</strong>: Bidirectional Search is complete if we use BFS in both searches.</li></ul><ul id="116394ea-02d1-801b-8cdf-f2533a7ac08b" class="bulleted-list"><li style="list-style-type:disc"><strong>Time Complexity: </strong>Time complexity of bidirectional search using BFS is O(bd).</li></ul><ul id="116394ea-02d1-8005-9f0e-cb717dbc9c9d" class="bulleted-list"><li style="list-style-type:disc"><strong>Space Complexity: </strong>Space complexity of bidirectional search is O(bd).<br/>Optimal: Bidirectional search is Optimal.<br/></li></ul><p id="116394ea-02d1-808e-bbfa-fcd4da6bde33" class="">
+</p><p id="116394ea-02d1-8015-b41d-cc90d511c1ea" class=""><strong>Advantages:</strong></p><ul id="116394ea-02d1-8012-b4f3-c5a303cef5d9" class="bulleted-list"><li style="list-style-type:disc">Bidirectional search is fast.</li></ul><ul id="116394ea-02d1-80ce-803c-ecd07d64b4bd" class="bulleted-list"><li style="list-style-type:disc">Bidirectional search requires less memory</li></ul><p id="116394ea-02d1-809d-ae4d-f0c2442101f1" class="">
+</p><p id="116394ea-02d1-8039-ac40-de232e3cb2f2" class=""><strong>Disadvantages:</strong></p><ul id="116394ea-02d1-8034-b156-d8c7c26eddf0" class="bulleted-list"><li style="list-style-type:disc">Implementation of the bidirectional search tree is difficult.</li></ul><ul id="116394ea-02d1-803c-9caf-f38bbfa2191b" class="bulleted-list"><li style="list-style-type:disc">In  bidirectional search, one should know the goal state in advance.</li></ul><p id="116394ea-02d1-80c0-9017-e19307b1f464" class="">
+</p><p id="116394ea-02d1-8083-8923-e5f9ad40652d" class="">
+</p><h1 id="116394ea-02d1-8002-b875-c4ba48714703" class="">Depth Limited Search</h1><p id="116394ea-02d1-80f0-9ffd-c0818485221a" class="">A depth-limited search algorithm is similar to depth-first search with a predetermined limit. Depth-limited search can solve the drawback of the infinite path in the Depth first search. In this algorithm, the node at the depth limit will treat as it has no successor nodes further.</p><p id="116394ea-02d1-8025-b5e0-fcd588718e31" class=""><br/>⇒ Depth-limited search can be terminated with two Conditions of failure:<br/></p><ol type="1" id="116394ea-02d1-8064-9bb8-d13375fb79d4" class="numbered-list" start="1"><li><strong>Standard failure value</strong>: It indicates that problem does not have any solution.</li></ol><ol type="1" id="116394ea-02d1-804c-bfb7-d383c4c0e057" class="numbered-list" start="2"><li><strong>Cutoff failure value</strong>: It defines no solution for the problem within a given depth limit.<br/><br/></li></ol><figure id="116394ea-02d1-80b0-8a60-e9b632293923" class="image"><a href="image%202.png"><img style="width:384px" src="image%202.png"/></a></figure><ul id="116394ea-02d1-8056-abed-f72a05d418cd" class="bulleted-list"><li style="list-style-type:disc">Completeness: DLS search algorithm is complete if the solution is above the depth-limit.</li></ul><ul id="116394ea-02d1-8085-bdbe-fddfbe5460ee" class="bulleted-list"><li style="list-style-type:disc">Time Complexity: Time complexity of DLS algorithm is O(bℓ).</li></ul><ul id="116394ea-02d1-80a3-bb53-ebd53d456926" class="bulleted-list"><li style="list-style-type:disc">Space Complexity: Space complexity of DLS algorithm is O(b×ℓ).</li></ul><p id="116394ea-02d1-8054-a68c-c424df645a90" class="">
+</p><p id="116394ea-02d1-8041-88f7-c4d367cc9b04" class=""><strong>Advantages:</strong></p><ul id="116394ea-02d1-80ff-ad2a-c8fcb0993289" class="bulleted-list"><li style="list-style-type:disc">Depth-limited search is Memory efficient.</li></ul><p id="116394ea-02d1-805b-b639-f286bc9ecb97" class=""><strong>Disadvantages:</strong></p><ul id="116394ea-02d1-80e9-9d04-d8ae2ba116a4" class="bulleted-list"><li style="list-style-type:disc">Depth-limited search also has a disadvantage of incompleteness.<br/>It may not be optimal if the problem has more than one solution<br/></li></ul><p id="116394ea-02d1-808e-af7f-d6208d66ac4b" class="">
+</p><p id="116394ea-02d1-8072-a964-cc34066c5aa0" class="">
+</p><h1 id="116394ea-02d1-800b-8b00-f3cbba57b5d3" class=""><strong><span style="border-bottom:0.05em solid">Informed Search</span></strong></h1><ul id="116394ea-02d1-8031-bd52-dc9d2fd65517" class="bulleted-list"><li style="list-style-type:disc">The algorithms of an informed search contain information regarding the<br/>goal state.<br/></li></ul><ul id="116394ea-02d1-80dc-b772-f1d88899d635" class="bulleted-list"><li style="list-style-type:disc">It helps an AI make more efficient and accurate searches.</li></ul><ul id="116394ea-02d1-80ca-ba3e-d251993ad7d5" class="bulleted-list"><li style="list-style-type:disc">A function obtains this data/info to estimate the closeness of a state to its<br/>goal in the system.<br/></li></ul><p id="116394ea-02d1-8096-ace9-c3ace5f1bb2a" class=""><strong>Types:</strong></p><ol type="1" id="116394ea-02d1-80d2-afe1-f0f72eb597c1" class="numbered-list" start="1"><li>Greedy First Search</li></ol><ol type="1" id="116394ea-02d1-8049-a4e6-e58123857be9" class="numbered-list" start="2"><li>A* Search</li></ol><ol type="1" id="116394ea-02d1-8084-ac80-eb5163443393" class="numbered-list" start="3"><li>Hill-Climbing Search</li></ol><p id="116394ea-02d1-803f-b739-ee89ca734f51" class="">
+</p><p id="116394ea-02d1-80d3-8675-c0977a0cc2d8" class="">
+</p><h1 id="116394ea-02d1-80c2-8086-fe2f26901fae" class="">Greedy First Search</h1><h1 id="116394ea-02d1-8085-8e92-fa499fff31d7" class="">How Greedy Best-First Search Works?</h1><ul id="116394ea-02d1-8075-b5e2-c4fdf40c0023" class="bulleted-list"><li style="list-style-type:disc">Greedy Best-First Search works by evaluating the cost of each possible path and then expanding the path with the lowest cost. This process is repeated until the goal is reached.</li></ul><ul id="116394ea-02d1-8044-9f89-df1b4dc995a1" class="bulleted-list"><li style="list-style-type:disc">The algorithm uses a heuristic function to determine which path is the most promising.</li></ul><ul id="116394ea-02d1-808a-bb2c-d7c530157818" class="bulleted-list"><li style="list-style-type:disc">The heuristic function takes into account the cost of the current path and the estimated cost of the remaining paths.</li></ul><ul id="116394ea-02d1-8097-ac40-cb2bc5cfd217" class="bulleted-list"><li style="list-style-type:disc">If the cost of the current path is lower than the estimated cost of the remaining paths, then the current path is chosen. This process is repeated until the goal is reached.</li></ul><p id="116394ea-02d1-80a1-adc6-ce5cd019d9db" class="">
+</p><p id="116394ea-02d1-8087-90bb-fdc19716f774" class=""><strong>An example of the best-first search algorithm is below graph, suppose we have to find the path from A to G.</strong></p><p id="116394ea-02d1-80a7-a41b-e124174422f3" class=""><em><strong>The values in red color represent the heuristic value of reaching the goal node G from current node</strong></em></p><figure id="116394ea-02d1-8067-bcff-e8f3b060c970" class="image" style="text-align:center"><a href="https://media.geeksforgeeks.org/wp-content/uploads/20240118145230/1-(1)-768.webp"><img style="width:590px" src="https://media.geeksforgeeks.org/wp-content/uploads/20240118145230/1-(1)-768.webp"/></a></figure><p id="116394ea-02d1-80a6-9244-ce1f6bb46a44" class=""><em>1) We are starting from A , so from A there are direct path to node B( with heuristics value of 32 ) , from A to C ( with heuristics value of 25 ) and from A to D( with heuristics value of 35 ) .</em></p><p id="116394ea-02d1-8013-8d12-fd13839378d8" class=""><em>2) So as per best first search algorithm choose the path with lowest heuristics value , currently C has lowest value among above node . So we will go from A to C.</em></p><figure id="116394ea-02d1-801f-9c15-f9bdace40aa0" class="image"><a href="https://media.geeksforgeeks.org/wp-content/uploads/20240118145317/2-(1)-768.webp"><img style="width:610px" src="https://media.geeksforgeeks.org/wp-content/uploads/20240118145317/2-(1)-768.webp"/></a></figure><p id="116394ea-02d1-80b6-845f-dfe55b4bee59" class=""><em>3) Now from C we have direct paths as C to F( with heuristics value of 17 ) and C to E( with heuristics value of 19) , so we will go from C to F.</em></p><figure id="116394ea-02d1-8026-bf82-f7bdc4c34ad4" class="image"><a href="https://media.geeksforgeeks.org/wp-content/uploads/20240118145402/3-(1)-768.webp"><img style="width:584px" src="https://media.geeksforgeeks.org/wp-content/uploads/20240118145402/3-(1)-768.webp"/></a></figure><p id="116394ea-02d1-80f8-8bc5-cef3cb636bc5" class=""><em>4) Now from F we have direct path to go to the goal node G ( with heuristics value of 0 ) , so we will go from F to G.</em></p><figure id="116394ea-02d1-8078-94da-db6395e5a09d" class="image"><a href="https://media.geeksforgeeks.org/wp-content/uploads/20240118145443/4-768.webp"><img style="width:615px" src="https://media.geeksforgeeks.org/wp-content/uploads/20240118145443/4-768.webp"/></a></figure><p id="116394ea-02d1-8067-a3e8-fd9c215437ad" class=""><em>5) So now the goal node G has been reached and the path we will follow is </em><em><strong>A-&gt;C-&gt;F-&gt;G</strong></em><em> .</em></p><p id="116394ea-02d1-8050-a1bf-fed951bf3ee9" class="">
+</p><h1 id="116394ea-02d1-80bb-a1fc-ecc83e1fea4b" class="">Advantages of Greedy Best-First Search:</h1><ul id="116394ea-02d1-800f-9e1f-e3d3c532e02d" class="bulleted-list"><li style="list-style-type:disc"><strong>Simple and Easy to Implement: </strong>Greedy Best-First Search is a relatively straightforward algorithm, making it easy to implement.</li></ul><ul id="116394ea-02d1-8080-9db9-fa39b1204b1d" class="bulleted-list"><li style="list-style-type:disc"><strong>Fast and Efficient: </strong>Greedy Best-First Search is a very fast algorithm, making it ideal for applications where speed is essential.</li></ul><ul id="116394ea-02d1-8068-ba1e-cd38059a6e58" class="bulleted-list"><li style="list-style-type:disc"><strong>Low Memory Requirements:</strong> Greedy Best-First Search requires only a small amount of memory, making it suitable for applications with limited memory.</li></ul><ul id="116394ea-02d1-8081-8695-fcdf2c8cf5e6" class="bulleted-list"><li style="list-style-type:disc"><strong>Flexible: </strong>Greedy Best-First Search can be adapted to different types of problems and can be easily extended to more complex problems.</li></ul><ul id="116394ea-02d1-8088-82c5-ea0137300c43" class="bulleted-list"><li style="list-style-type:disc"><strong>Efficiency: </strong>If the heuristic function used in Greedy Best-First Search is good to estimate, how close a node is to the solution, this algorithm can be a very efficient and find a solution quickly, even in large search spaces.</li></ul><h1 id="116394ea-02d1-8087-8791-ce9a7f531820" class="">Disadvantages of Greedy Best-First Search:</h1><ul id="116394ea-02d1-80ab-bb6c-d7c7a137df98" class="bulleted-list"><li style="list-style-type:disc"><strong>Inaccurate Results: </strong>Greedy Best-First Search is not always guaranteed to find the optimal solution, as it is only concerned with finding the most promising path.</li></ul><ul id="116394ea-02d1-8082-a9fa-f324625345ea" class="bulleted-list"><li style="list-style-type:disc"><strong>Local Optima:</strong> Greedy Best-First Search can get stuck in local optima, meaning that the path chosen may not be the best possible path.</li></ul><ul id="116394ea-02d1-80ee-9c21-f6b07726f66e" class="bulleted-list"><li style="list-style-type:disc"><strong>Heuristic Function: </strong>Greedy Best-First Search requires a heuristic function in order to work, which adds complexity to the algorithm<strong>.</strong></li></ul><ul id="116394ea-02d1-8089-8f85-ff1b04269bd3" class="bulleted-list"><li style="list-style-type:disc"><strong>Lack of Completeness: </strong>Greedy Best-First Search is not a complete algorithm, meaning it may not always find a solution if one is exists. This can happen if the algorithm gets stuck in a cycle or if the search space is a too much complex.</li></ul><h1 id="116394ea-02d1-8039-bb0f-e512e33fcf1a" class="">Applications of Greedy Best-First Search:</h1><ul id="116394ea-02d1-8085-adfc-d2f396e9aac6" class="bulleted-list"><li style="list-style-type:disc"><strong>Pathfinding: </strong>Greedy Best-First Search is used to find the shortest path between two points in a graph. It is used in many applications such as video games, robotics, and navigation systems.</li></ul><ul id="116394ea-02d1-801b-a55c-ec559586cb5c" class="bulleted-list"><li style="list-style-type:disc"><strong>Machine Learning: </strong>Greedy Best-First Search can be used in machine learning algorithms to find the most promising path through a search space.</li></ul><ul id="116394ea-02d1-80cc-aab9-d06411e4c931" class="bulleted-list"><li style="list-style-type:disc"><strong>Optimization: </strong>Greedy Best-First Search can be used to optimize the parameters of a system in order to achieve the desired result.</li></ul><ul id="116394ea-02d1-80a2-85b1-eae4c04bb086" class="bulleted-list"><li style="list-style-type:disc"><strong>Game AI:</strong> Greedy Best-First Search can be used in game AI to evaluate potential moves and chose the best one.</li></ul><ul id="116394ea-02d1-80e0-b9fe-ca0cdb9cf1ef" class="bulleted-list"><li style="list-style-type:disc"><strong>Navigation:</strong> Greedy Best-First Search can be use to navigate to find the shortest path between two locations.</li></ul><ul id="116394ea-02d1-806b-9dbe-ecdaf8b5b19f" class="bulleted-list"><li style="list-style-type:disc"><strong>Natural Language Processing: </strong>Greedy Best-First Search can be use in natural language processing tasks such as language translation or speech recognition to generate the most likely sequence of words.</li></ul><ul id="116394ea-02d1-809d-b704-c599410bb3e2" class="bulleted-list"><li style="list-style-type:disc"><strong>Image Processing: </strong>Greedy Best-First Search can be use in image processing to segment image into regions of interest.</li></ul><p id="116394ea-02d1-80e3-b9ed-debe43e87c9f" class="">
+</p><h1 id="116394ea-02d1-80d3-bf9a-d370a4e96dc6" class="">Hill Climbing Search</h1><p id="116394ea-02d1-80b0-89f4-d7e1ba58e34a" class="">Hill Climbing is a <strong><a href="https://www.geeksforgeeks.org/search-algorithms-in-ai/">heuristic search</a></strong> used for mathematical optimization problems in the field of Artificial Intelligence.</p><p id="116394ea-02d1-80a1-91b6-de6606be77e2" class="">Given a large set of inputs and a good heuristic function, it tries to find a sufficiently good solution to the problem. This solution may not be the global optimal maximum.</p><ul id="116394ea-02d1-80c1-9fc2-c985277acfb5" class="bulleted-list"><li style="list-style-type:disc">In the above definition, <strong>mathematical optimization problems</strong> imply that hill-climbing solves the problems where we need to maximize or minimize a given real function by choosing values from the given inputs. Example-<strong><a href="https://www.geeksforgeeks.org/travelling-salesman-problem-set-1/">Travelling salesman problem</a></strong> where we need to minimize the distance traveled by the salesman.</li></ul><ul id="116394ea-02d1-8038-a388-c55a398b8989" class="bulleted-list"><li style="list-style-type:disc">‘Heuristic search’ means that this search algorithm may not find the optimal solution to the problem. However, it will give a good solution in a <strong>reasonable time.</strong></li></ul><ul id="116394ea-02d1-80e6-a344-f8e5b5b99121" class="bulleted-list"><li style="list-style-type:disc">A <strong>heuristic function</strong> is a function that will rank all the possible alternatives at any branching step in the search algorithm based on the available information. It helps the algorithm to select the best route out of possible routes.</li></ul><h1 id="116394ea-02d1-804f-8b7f-dfe4d20c2fc1" class="">Features of Hill Climbing</h1><h3 id="116394ea-02d1-800c-83f7-d14adbd6882d" class=""><strong>1. Variant of generating and test algorithm:</strong></h3><p id="116394ea-02d1-8043-ba37-eef88e503cd8" class="">It is a variant of generating and testing algorithms. The generate and test algorithm is as follows :</p><ul id="116394ea-02d1-8025-9e23-d771be9ed4a1" class="bulleted-list"><li style="list-style-type:disc">Generate possible solutions.</li></ul><ul id="116394ea-02d1-8024-a6c2-f49d601bd0ea" class="bulleted-list"><li style="list-style-type:disc">Test to see if this is the expected solution.</li></ul><ul id="116394ea-02d1-80a2-b6ac-f6a699826b9d" class="bulleted-list"><li style="list-style-type:disc">If the solution has been found quit else go to step 1.</li></ul><p id="116394ea-02d1-803e-a5fe-e318e23643b2" class="">Hence we call Hill climbing a variant of generating and test algorithm as it takes the feedback from the test procedure. Then this feedback is utilized by the generator in deciding the next move in the search space.</p><h3 id="116394ea-02d1-8088-996a-fc35e0eee75f" class=""><strong>2. Uses the </strong><strong><a href="https://www.geeksforgeeks.org/greedy-algorithms-set-1-activity-selection-problem/">Greedy approach</a></strong><strong>:</strong></h3><p id="116394ea-02d1-80ed-8301-fd0583a2fc1c" class="">At any point in state space, the search moves in that direction only which optimizes the cost of function with the hope of finding the optimal solution at the end.</p><h1 id="116394ea-02d1-805c-b3fe-e322346f15f0" class="">Types of Hill Climbing</h1><h3 id="116394ea-02d1-80ed-8eda-d65036099dd3" class=""><strong>1. Simple Hill climbing:</strong></h3><blockquote id="116394ea-02d1-8019-93ec-df930b862a4d" class="">It examines the neighboring nodes one by one and selects the first neighboring node which optimizes the current cost as the next node.</blockquote><p id="116394ea-02d1-8039-a7bc-e389e2b8f5b2" class="">Algorithm for Simple Hill climbing :</p><ul id="116394ea-02d1-8009-8c9f-e0503dc3ebac" class="bulleted-list"><li style="list-style-type:disc">Evaluate the initial state. If it is a goal state then stop and return success. Otherwise, make the initial state as the current state.</li></ul><ul id="116394ea-02d1-801e-93e7-d5d9af38357c" class="bulleted-list"><li style="list-style-type:disc">Loop until the solution state is found or there are no new operators present which can be applied to the current state.<ul id="116394ea-02d1-800f-94ef-e1406f4f2cab" class="bulleted-list"><li style="list-style-type:circle">Select a state that has not been yet applied to the current state and apply it to produce a new state.</li></ul><ul id="116394ea-02d1-80d8-bd61-f098b87ea198" class="bulleted-list"><li style="list-style-type:circle">Perform these to evaluate the new state.<ul id="116394ea-02d1-80f3-bfe8-ce0592a67f7d" class="bulleted-list"><li style="list-style-type:square">If the current state is a goal state, then stop and return success.</li></ul><ul id="116394ea-02d1-8092-b2d2-ce9f41cd6af4" class="bulleted-list"><li style="list-style-type:square">If it is better than the current state, then make it the current state and proceed further.</li></ul><ul id="116394ea-02d1-8031-823e-e82a8ca36faa" class="bulleted-list"><li style="list-style-type:square">If it is not better than the current state, then continue in the loop until a solution is found.</li></ul></li></ul></li></ul><ul id="116394ea-02d1-802b-a5c4-cc3f88689ef2" class="bulleted-list"><li style="list-style-type:disc">Exit from the function.</li></ul><h3 id="116394ea-02d1-809d-b4eb-e9926c770968" class=""><strong>2. Steepest-Ascent Hill climbing:</strong></h3><blockquote id="116394ea-02d1-801d-a0a3-e6ab4dd15202" class="">It first examines all the neighboring nodes and then selects the node closest to the solution state as of the next node.</blockquote><p id="116394ea-02d1-80f1-a966-c382b17836d4" class="">Algorithm for Steepest Ascent Hill climbing :</p><ul id="116394ea-02d1-802e-8afe-c0560a83b894" class="bulleted-list"><li style="list-style-type:disc">Evaluate the initial state. If it is a goal state then stop and return success. Otherwise, make the initial state as the current state.</li></ul><ul id="116394ea-02d1-80cd-b792-e3252f5a7dcd" class="bulleted-list"><li style="list-style-type:disc">Repeat these steps until a solution is found or the current state does not change<ul id="116394ea-02d1-8023-903a-da11257cce3d" class="bulleted-list"><li style="list-style-type:circle">Select a state that has not been yet applied to the current state.</li></ul><ul id="116394ea-02d1-809e-ab85-ecb89f619d3c" class="bulleted-list"><li style="list-style-type:circle">Initialize a new ‘best state’ equal to the current state and apply it to produce a new state.</li></ul><ul id="116394ea-02d1-8088-b227-f5c9cff62e49" class="bulleted-list"><li style="list-style-type:circle">Perform these to evaluate the new state<ul id="116394ea-02d1-80b1-9e06-dfe9e486f0c2" class="bulleted-list"><li style="list-style-type:square">If the current state is a goal state, then stop and return success.</li></ul><ul id="116394ea-02d1-80c0-8ac4-e0a3cfd7d438" class="bulleted-list"><li style="list-style-type:square">If it is better than the best state, then make it the best state else continue the loop with another new state.</li></ul></li></ul><ul id="116394ea-02d1-8002-a367-dc471e5f04ae" class="bulleted-list"><li style="list-style-type:circle">Make the best state as the current state and go to Step 2 of the second point.</li></ul></li></ul><ul id="116394ea-02d1-803a-b707-c02c9e2b453a" class="bulleted-list"><li style="list-style-type:disc">Exit from the function.</li></ul><h3 id="116394ea-02d1-8065-b904-f8935857758b" class=""><strong>3. Stochastic hill climbing:</strong></h3><blockquote id="116394ea-02d1-8094-a207-f0821d323355" class="">It does not examine all the neighboring nodes before deciding which node to select. It just selects a neighboring node at random and decides (based on the amount of improvement in that neighbor) whether to move to that neighbor or to examine another.</blockquote><ul id="116394ea-02d1-80ab-a867-f8b2a8ff9fd7" class="bulleted-list"><li style="list-style-type:disc">Evaluate the initial state. If it is a goal state then stop and return success. Otherwise, make the initial state the current state.</li></ul><ul id="116394ea-02d1-80f9-a836-c4dd0c9e5bb6" class="bulleted-list"><li style="list-style-type:disc">Repeat these steps until a solution is found or the current state does not change.<ul id="116394ea-02d1-80ef-826b-cf9f8137df38" class="bulleted-list"><li style="list-style-type:circle">Select a state that has not been yet applied to the current state.</li></ul><ul id="116394ea-02d1-80ae-be2f-e9b0ee45682c" class="bulleted-list"><li style="list-style-type:circle">Apply the successor function to the current state and generate all the neighbor states.</li></ul><ul id="116394ea-02d1-809c-852b-dbe2a5286d19" class="bulleted-list"><li style="list-style-type:circle">Among the generated neighbor states which are better than the current state choose a state randomly (or based on some probability function).</li></ul><ul id="116394ea-02d1-8032-886d-e3d8601822a6" class="bulleted-list"><li style="list-style-type:circle">If the chosen state is the goal state, then return success, else make it the current state and repeat step 2 of the second point.</li></ul></li></ul><ul id="116394ea-02d1-803f-8d74-ee56b11eeaf1" class="bulleted-list"><li style="list-style-type:disc">Exit from the function.</li></ul><h1 id="116394ea-02d1-8086-ae9d-ca9631f70f22" class="">State Space diagram for Hill Climbing</h1><blockquote id="116394ea-02d1-8026-94cd-c7eea364699e" class="">The state-space diagram is a graphical representation of the set of states our search algorithm can reach vs the value of our objective function(the function which we wish to maximize).</blockquote><ul id="116394ea-02d1-8071-b406-d997b929f28e" class="bulleted-list"><li style="list-style-type:disc"><strong>X-axis:</strong> denotes the state space ie states or configuration our algorithm may reach.</li></ul><ul id="116394ea-02d1-805a-8ed6-f1b805a7b1bb" class="bulleted-list"><li style="list-style-type:disc"><strong>Y-axis:</strong> denotes the values of objective function corresponding to a particular state.</li></ul><p id="116394ea-02d1-8000-92e1-eeb2b07aac05" class="">The best solution will be a state space where the objective function has a maximum value(global maximum).</p><figure id="116394ea-02d1-80ea-bfa3-fd8104052abf" class="image"><a href="https://media.geeksforgeeks.org/wp-content/cdn-uploads/20210726172958/objectfuntion.png"><img src="https://media.geeksforgeeks.org/wp-content/cdn-uploads/20210726172958/objectfuntion.png"/></a></figure><h1 id="116394ea-02d1-806b-ba6d-f605ea9f9d85" class="">Different regions in the State Space Diagram:</h1><ul id="116394ea-02d1-8079-a9aa-d3769f14cb01" class="bulleted-list"><li style="list-style-type:disc"><strong>Local maximum: </strong>It is a state which is better than its neighboring state however there exists a state which is better than it(global maximum). This state is better because here the value of the objective function is higher than its neighbors. </li></ul><ul id="116394ea-02d1-8046-a9ab-ebfc709d9623" class="bulleted-list"><li style="list-style-type:disc"><strong>Global maximum: </strong>It is the best possible state in the state space diagram. This is because, at this stage, the objective function has the highest value.</li></ul><ul id="116394ea-02d1-8076-adf7-c077ac2346e8" class="bulleted-list"><li style="list-style-type:disc"><strong>Plateau/flat local maximum: </strong>It is a flat region of state space where neighboring states have the same value.</li></ul><ul id="116394ea-02d1-8068-9fe8-e8bdcc2a077f" class="bulleted-list"><li style="list-style-type:disc"><strong>Ridge: </strong>It is a region that is higher than its neighbors but itself has a slope. It is a special kind of local maximum.</li></ul><ul id="116394ea-02d1-803a-99ec-eac922605cd4" class="bulleted-list"><li style="list-style-type:disc"><strong>Current state: </strong>The region of the state space diagram where we are currently present during the search.</li></ul><ul id="116394ea-02d1-80dd-bf1f-f12718d5b549" class="bulleted-list"><li style="list-style-type:disc"><strong>Shoulder: </strong>It is a plateau that has an uphill edge.</li></ul><h1 id="116394ea-02d1-8091-b63b-fced59de3e43" class="">Problems in different regions in Hill climbing</h1><p id="116394ea-02d1-80eb-a200-fb144e8259d0" class="">Hill climbing cannot reach the optimal/best state(global maximum) if it enters any of the following regions :</p><ul id="116394ea-02d1-8083-be83-e872ba758b5e" class="bulleted-list"><li style="list-style-type:disc"><strong>Local maximum: </strong>At a local maximum all neighboring states have a value that is worse than the current state. Since hill-climbing uses a greedy approach, it will not move to the worse state and terminate itself. The process will end even though a better solution may exist. <strong>To overcome the local maximum problem: </strong>Utilize the <strong><a href="https://www.geeksforgeeks.org/backtracking-set-1-the-knights-tour-problem/">backtracking technique</a></strong>. Maintain a list of visited states. If the search reaches an undesirable state, it can backtrack to the previous configuration and explore a new path.</li></ul><ul id="116394ea-02d1-80be-bb3e-ff2862098216" class="bulleted-list"><li style="list-style-type:disc"><strong>Plateau: </strong>On the plateau, all neighbors have the same value. Hence, it is not possible to select the best direction. <strong>To overcome plateaus:</strong> Make a big jump. Randomly select a state far away from the current state. Chances are that we will land in a non-plateau region.</li></ul><ul id="116394ea-02d1-80cb-8cc0-f98517085b2e" class="bulleted-list"><li style="list-style-type:disc"><strong>Ridge: </strong>Any point on a ridge can look like a peak because movement in all possible directions is downward. Hence the algorithm stops when it reaches this state. <strong>To overcome Ridge:</strong> In this kind of obstacle, use two or more rules before testing. It implies moving in several directions at once.</li></ul><p id="116394ea-02d1-8046-84c3-e7f9dffb3093" class="">
+</p><p id="116394ea-02d1-80ee-826c-e68ce3bb35f7" class="">
+</p><h1 id="116394ea-02d1-805e-ad1f-e8fcb01e2ea9" class="">A* Algorithm</h1><ul id="116394ea-02d1-80b8-9948-f1480f564e08" class="bulleted-list"><li style="list-style-type:disc">A* Search algorithm is one of the best and popular technique used in path-finding and graph traversals.</li></ul><ul id="116394ea-02d1-8009-81e3-f8ad314c2d83" class="bulleted-list"><li style="list-style-type:disc">A* (pronounced &quot;A-star&quot;) is a powerful graph traversal and pathfinding<br/>algorithm widely used in artificial intelligence and computer science.<br/></li></ul><ul id="116394ea-02d1-8097-9ed7-c022ce21d273" class="bulleted-list"><li style="list-style-type:disc"> It is mainly used to find the shortest path between two nodes in a graph, given the estimated cost of getting from the current node to the destination node.</li></ul><ul id="116394ea-02d1-80b6-a9a4-fe071770ee1d" class="bulleted-list"><li style="list-style-type:disc">Algorithm A* combines the advantages of two other search algorithms: Dijkstra&#x27;s algorithm and Greedy Best-First Search.</li></ul><ul id="116394ea-02d1-8026-9d1a-c53a8065457c" class="bulleted-list"><li style="list-style-type:disc">Like Dijkstra&#x27;s algorithm, A* ensures that the path found is as short as possible but does so more efficiently by directing its search through a heuristic similar to Greedy Best-First Search.</li></ul><ul id="116394ea-02d1-80bf-8775-fdb06940ac1a" class="bulleted-list"><li style="list-style-type:disc">A heuristic function, denoted h(n), estimates the cost of getting from any given node n to the destination node.</li></ul><ul id="116394ea-02d1-8007-a947-fcaf879eb101" class="bulleted-list"><li style="list-style-type:disc">The main idea of A* is to evaluate each node based on two parameters: <p id="116394ea-02d1-808b-8e7b-e9a190f93b66" class="">→ g(n): the actual cost to get from the initial node to node n. It represents the sum of the costs of node n outgoing edges.<br/>→ h(n): Heuristic cost (also known as &quot;estimation cost&quot;) from node n to destination node n.<br/> f(n) = g(n) h(n).<br/></p><p id="116394ea-02d1-80c1-a8c4-e8e905f7d796" class="">
+</p><h2 id="116394ea-02d1-80c9-b69f-e8495f0f3d9c" class="">Working:</h2><ol type="1" id="116394ea-02d1-8097-ab5e-c84931156f06" class="numbered-list" start="1"><li> Create an open list of found but not explored nodes.</li></ol><ol type="1" id="116394ea-02d1-802f-a173-d9ffeaa65dc7" class="numbered-list" start="2"><li> Create a closed list to hold already explored nodes.</li></ol><ol type="1" id="116394ea-02d1-8020-baec-c6a60fc5bbd7" class="numbered-list" start="3"><li>Add a starting node to the open list with an initial value of g.</li></ol><ol type="1" id="116394ea-02d1-8062-8a30-ed1d22756ab7" class="numbered-list" start="4"><li>Repeat the following steps until the open list is empty or you reach the target node:<br/>a) Find the node with the smallest f-value (i.e., the node with the minor g(n) h(n)) in the open list.<br/>b)Move the selected node from the open list to the closed list.<br/>c)Create all valid descendants of the selected node.<br/><p id="116394ea-02d1-80d4-8205-f81886698f7e" class="">d) For each successor, calculate its g-value as the sum of the current node&#x27;s g value and<br/>the cost of moving from the current node to the successor node.<br/>e) If the follower is not in the open list, add it with the calculated g-value and calculate<br/>its h-value.<br/></p><p id="116394ea-02d1-8013-bd05-f2e0db425b83" class="">f) Repeat the cycle.</p><p id="116394ea-02d1-80c3-8cc2-e768fdbc19dd" class="">● Algorithm A* terminates when the target node is reached or when the open list<br/>empties, indicating no paths from the start node to the target node.<br/>● The A* search algorithm is widely used in various fields such as robotics, video<br/>games, network routing, and design problems because it is efficient and can find<br/>optimal paths in graphs or networks.<br/></p></li></ol></li></ul><p id="116394ea-02d1-802f-a0d6-cd68da4ecd13" class="">
+</p><h3 id="116394ea-02d1-80db-a453-f192ca553bd2" class="">Example 1:</h3><figure id="116394ea-02d1-80db-8e7d-c7c13be8508e" class="image"><a href="image%203.png"><img style="width:558.1749877929688px" src="image%203.png"/></a></figure><p id="116394ea-02d1-80fb-9faf-ffb82a7b2fc7" class="">
+</p><h1 id="116394ea-02d1-8078-aa0f-f4c34070255a" class="">Adversarial Search</h1><p id="116394ea-02d1-809c-8389-c4dabaca6e2f" class="">The Adversarial search is a well-suited approach in a competitive environment,<br/>where two or more agents have conflicting goals.<br/>● The adversarial search can be employed in two-player games which means what is good for one player will be the misfortune for the other.<br/>● In artificial intelligence, adversarial search plays a vital role in decision-making, particularly in competitive environments associated with games and strategic interactions.<br/>● Adversarial search is a search, where we examine the problem which arises when we try to plan ahead of the world and other agents are planning against us.<br/>● Adversarial Search in Game Playing: In which we examine the problems that arise when we try to plan ahead in a world where other agents are planning against us.<br/></p><p id="116394ea-02d1-8055-a77c-c669ef1cd870" class="">
+</p><h3 id="116394ea-02d1-8014-a6cc-fd95384b2dbf" class="">Assumptions</h3><p id="116394ea-02d1-8052-bb00-ebeef449eeab" class="">● 2 agents whose actions alternate – 2 player games with alternate moves<br/>● Values for each agent are the opposite of the other which creates adversarial<br/>situation.<br/>● Fully observable environments.<br/>● Using dice is not involved<br/>● Clear rules for legal moves<br/>● Well defined moves<br/>● Example: Tic Tac Toe, Checkers, Chess<br/></p><p id="116394ea-02d1-803e-a915-df93276d2665" class="">
+</p><p id="116394ea-02d1-8036-a43c-f71532a34353" class=""><strong>How to strategize in each game?</strong><br/>● Consider all the legal moves you can make<br/>● Each move leads to a new board configuration<br/>● Evaluate each resulting position and determine which is best<br/>● Make that move<br/>● Wait for the opponent to move and repeat<br/></p><p id="116394ea-02d1-803d-986d-e9438db3ef70" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="116394ea-02d1-8054-8efb-fddef000ec32"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><p id="6dbc73f5-d17e-404b-a4e4-271a3a036164" class="">Things to remember:(just for an idea)</p><h2 id="116394ea-02d1-8015-bb9c-d4f864577fbf" class=""><strong>Important Features of Adversarial Search</strong></h2><ul id="116394ea-02d1-80cd-a1a8-cbddcb689fdc" class="bulleted-list"><li style="list-style-type:disc"><strong>Perfect or Imperfect Information:</strong> In games, players can have full or partial information. <strong>Perfect information</strong> means all players know the complete state of the game (like in chess). <strong>Imperfect information</strong> means some details are hidden from the players (like in poker).</li></ul><ul id="116394ea-02d1-80d0-bef3-eaf099bb5e82" class="bulleted-list"><li style="list-style-type:disc"><strong>Adversarial Search Algorithms:</strong> In games like chess, players use strategies like <strong>minimax</strong> or <strong>alpha-beta pruning</strong> to decide the best move. These methods predict possible outcomes for each move and suggest the best one.</li></ul><ul id="116394ea-02d1-80e2-a903-f4941daa9117" class="bulleted-list"><li style="list-style-type:disc"><strong>Heuristics (Thumb Rule):</strong> Game trees (which show all possible moves) can be huge, making it hard to explore every move. In such cases, the algorithm uses <strong>heuristics</strong>, which are shortcuts to help find the best move faster without looking at every possible option. This allows the algorithm to make good decisions without needing to explore the entire game tree.</li></ul></div></figure><p id="116394ea-02d1-80e0-a500-d9b7ab130f38" class="">
+</p><p id="116394ea-02d1-800b-aafc-e74a6b125cdd" class="">
+</p><h2 id="116394ea-02d1-804b-8fac-d47263523743" class="">Game Tree</h2><p id="116394ea-02d1-8041-9d8c-e4e17dae600f" class="">A game tree is a tree where nodes of the tree are the game states and Edges of the tree are the moves by players. Game tree involves initial state, actions function, and result Function.</p><p id="116394ea-02d1-805d-a3a1-c5de13545d03" class=""><strong>Example: Tic-Tac-Toe game tree:</strong></p><p id="116394ea-02d1-80e6-95cb-c54a90975c47" class="">The following figure is showing part of the game-tree for tic-tac-toe game. Following are some key points of the game:</p><ul id="116394ea-02d1-808a-b96a-d86392b2d93c" class="bulleted-list"><li style="list-style-type:disc">There are two players MAX and MIN.</li></ul><ul id="116394ea-02d1-8032-822f-e430cd62e48e" class="bulleted-list"><li style="list-style-type:disc">Players have an alternate turn and start with MAX.</li></ul><ul id="116394ea-02d1-8098-8718-ee1df48e0e8d" class="bulleted-list"><li style="list-style-type:disc">MAX maximizes the result of the game tree</li></ul><ul id="116394ea-02d1-8056-b7db-cc7033a8ea4a" class="bulleted-list"><li style="list-style-type:disc">MIN minimizes the result.</li></ul><figure id="116394ea-02d1-80bd-83e9-e66344e30fca" class="image"><a href="https://d2jdgazzki9vjm.cloudfront.net/tutorial/ai/images/ai-adversarial-search.png"><img src="https://d2jdgazzki9vjm.cloudfront.net/tutorial/ai/images/ai-adversarial-search.png"/></a></figure><p id="116394ea-02d1-80c4-96c1-cc8a4dc814db" class=""><strong>Example Explanation:</strong></p><ul id="116394ea-02d1-806f-8aa9-f011fe17b300" class="bulleted-list"><li style="list-style-type:disc">From the initial state, MAX has 9 possible moves as he starts first. MAX place x and MIN place o, and both player plays alternatively until we reach a leaf node where one player has three in a row or all squares are filled.</li></ul><ul id="116394ea-02d1-8063-a835-c970d1ccf82c" class="bulleted-list"><li style="list-style-type:disc">Both players will compute each node, minimax, the minimax value which is the best achievable utility against an optimal adversary.</li></ul><ul id="116394ea-02d1-80fc-87ac-ce01cca1a39a" class="bulleted-list"><li style="list-style-type:disc">Suppose both the players are well aware of the tic-tac-toe and playing the best play. Each player is doing his best to prevent another one from winning. MIN is acting against Max in the game.</li></ul><ul id="116394ea-02d1-80c8-9bec-d5c0d9921686" class="bulleted-list"><li style="list-style-type:disc">So in the game tree, we have a layer of Max, a layer of MIN, and each layer is called as <strong>Ply</strong>. Max place x, then MIN puts o to prevent Max from winning, and this game continues until the terminal node.</li></ul><ul id="116394ea-02d1-8011-8d3e-d6324ec16a0e" class="bulleted-list"><li style="list-style-type:disc">In this either MIN wins, MAX wins, or it&#x27;s a draw. This game-tree is the whole search space of possibilities that MIN and MAX are playing tic-tac-toe and taking turns alternately.</li></ul><p id="116394ea-02d1-80a5-9cb3-daaa50f87f8a" class="">
+</p><p id="116394ea-02d1-807e-ac62-f83d70679aac" class="">
+</p><h2 id="116394ea-02d1-80f8-b2cc-db45339fbce4" class="">MIN-MAX Algorithm</h2><h2 id="116394ea-02d1-8071-b048-c6519b5d1e98" class=""><strong>Working of Min-Max Algorithm:</strong></h2><ul id="116394ea-02d1-80ab-868a-e00ac3a13678" class="bulleted-list"><li style="list-style-type:disc">The working of the minimax algorithm can be easily described using an example. Below we have taken an example of game-tree which is representing the two-player game.</li></ul><ul id="116394ea-02d1-805b-8aa6-d2297114943d" class="bulleted-list"><li style="list-style-type:disc">In this example, there are two players one is called Maximizer and other is called Minimizer.</li></ul><ul id="116394ea-02d1-8002-93e8-fe0f8a9c4d31" class="bulleted-list"><li style="list-style-type:disc">Maximizer will try to get the Maximum possible score, and Minimizer will try to get the minimum possible score.</li></ul><ul id="116394ea-02d1-8053-a789-f6b9d46f02ee" class="bulleted-list"><li style="list-style-type:disc">This algorithm applies DFS, so in this game-tree, we have to go all the way through the leaves to reach the terminal nodes.</li></ul><ul id="116394ea-02d1-80e0-a929-d1c97380945f" class="bulleted-list"><li style="list-style-type:disc">At the terminal node, the terminal values are given so we will compare those value and backtrack the tree until the initial state occurs. Following are the main steps involved in solving the two-player game tree:</li></ul><p id="116394ea-02d1-80c9-a9a0-d8abc1d0d94a" class=""><strong>Step-1:</strong> In the first step, the algorithm generates the entire game-tree and apply the utility function to get the utility values for the terminal states. In the below tree diagram, let&#x27;s take A is the initial state of the tree. Suppose maximizer takes first turn which has worst-case initial value =- infinity, and minimizer will take next turn which has worst-case initial value = +infinity.</p><figure id="116394ea-02d1-80e4-b763-d775d493fa18" class="image"><a href="https://d2jdgazzki9vjm.cloudfront.net/tutorial/ai/images/mini-max-algorithm-in-ai-step1.png"><img src="https://d2jdgazzki9vjm.cloudfront.net/tutorial/ai/images/mini-max-algorithm-in-ai-step1.png"/></a></figure><p id="116394ea-02d1-809f-b487-dda40b465593" class=""><strong>Step 2:</strong> Now, first we find the utilities value for the Maximizer, its initial value is -∞, so we will compare each value in terminal state with initial value of Maximizer and determines the higher nodes values. It will find the maximum among the all.</p><ul id="116394ea-02d1-8014-a891-cd9387ac48a6" class="bulleted-list"><li style="list-style-type:disc">For node D max(-1,- -∞) =&gt; max(-1,4)= 4</li></ul><ul id="116394ea-02d1-806d-b268-e0f5932e6ab5" class="bulleted-list"><li style="list-style-type:disc">For Node E max(2, -∞) =&gt; max(2, 6)= 6</li></ul><ul id="116394ea-02d1-80f2-80b6-cea81b87be18" class="bulleted-list"><li style="list-style-type:disc">For Node F max(-3, -∞) =&gt; max(-3,-5) = -3</li></ul><ul id="116394ea-02d1-8093-baed-fff9d1c67568" class="bulleted-list"><li style="list-style-type:disc">For node G max(0, -∞) = max(0, 7) = 7</li></ul><figure id="116394ea-02d1-8034-8215-ecd9eb8b50b3" class="image"><a href="https://d2jdgazzki9vjm.cloudfront.net/tutorial/ai/images/mini-max-algorithm-in-ai-step2.png"><img src="https://d2jdgazzki9vjm.cloudfront.net/tutorial/ai/images/mini-max-algorithm-in-ai-step2.png"/></a></figure><p id="116394ea-02d1-809b-9051-d200cc3ac794" class=""><strong>Step 3:</strong> In the next step, it&#x27;s a turn for minimizer, so it will compare all nodes value with +∞, and will find the 3rd layer node values.</p><ul id="116394ea-02d1-803b-85f9-fcbcbba6b192" class="bulleted-list"><li style="list-style-type:disc">For node B= min(4,6) = 4</li></ul><ul id="116394ea-02d1-8058-9885-eaea654a58cf" class="bulleted-list"><li style="list-style-type:disc">For node C= min (-3, 7) = -3</li></ul><figure id="116394ea-02d1-801b-92e3-e6dd0cc446f9" class="image"><a href="https://d2jdgazzki9vjm.cloudfront.net/tutorial/ai/images/mini-max-algorithm-in-ai-step3.png"><img src="https://d2jdgazzki9vjm.cloudfront.net/tutorial/ai/images/mini-max-algorithm-in-ai-step3.png"/></a></figure><p id="116394ea-02d1-80f8-8dd6-c6ebd92f4aca" class=""><strong>Step 4:</strong> Now it&#x27;s a turn for Maximizer, and it will again choose the maximum of all nodes value and find the maximum value for the root node. In this game tree, there are only 4 layers, hence we reach immediately to the root node, but in real games, there will be more than 4 layers.</p><ul id="116394ea-02d1-80bd-bba5-f0b0259e42ed" class="bulleted-list"><li style="list-style-type:disc">For node A max(4, -3)= 4</li></ul><figure id="116394ea-02d1-8001-8774-cc8b5051555c" class="image"><a href="https://d2jdgazzki9vjm.cloudfront.net/tutorial/ai/images/mini-max-algorithm-in-ai-step4.png"><img src="https://d2jdgazzki9vjm.cloudfront.net/tutorial/ai/images/mini-max-algorithm-in-ai-step4.png"/></a></figure><p id="116394ea-02d1-80b5-ad93-cb2c0e15561c" class="">That was the complete workflow of the minimax two player game.</p><h2 id="116394ea-02d1-8053-b124-c45bf86232d4" class=""><strong>Properties of Mini-Max algorithm:</strong></h2><ul id="116394ea-02d1-8057-ac7a-f4806bc07065" class="bulleted-list"><li style="list-style-type:disc"><strong>Complete-</strong> Min-Max algorithm is Complete. It will definitely find a solution (if exist), in the finite search tree.</li></ul><ul id="116394ea-02d1-80f6-be05-c93bf7a588d5" class="bulleted-list"><li style="list-style-type:disc"><strong>Optimal-</strong> Min-Max algorithm is optimal if both opponents are playing optimally.</li></ul><ul id="116394ea-02d1-80cb-adb7-fc4a0817e9da" class="bulleted-list"><li style="list-style-type:disc"><strong>Time complexity-</strong> As it performs DFS for the game-tree, so the time complexity of Min-Max algorithm is <strong>O(bm)</strong>, where b is branching factor of the game-tree, and m is the maximum depth of the tree.</li></ul><ul id="116394ea-02d1-806b-88d6-c3a66f8cac8c" class="bulleted-list"><li style="list-style-type:disc"><strong>Space Complexity-</strong> Space complexity of Mini-max algorithm is also similar to DFS which is <strong>O(bm)</strong>.</li></ul><h2 id="116394ea-02d1-80ce-81ff-dd7bb5c26b9e" class=""><strong>Limitation of the minimax Algorithm:</strong></h2><p id="116394ea-02d1-80f0-b5d2-ead195809b06" class="">The main drawback of the minimax algorithm is that it gets really slow for complex games such as Chess, go, etc. This type of games has a huge branching factor, and the player has lots of choices to decide. This limitation of the minimax algorithm can be improved from <strong>alpha-beta pruning</strong> which we have discussed in the next topic.</p><p id="116394ea-02d1-803a-af7d-ce5e4f49cbf0" class="">
+</p><p id="116394ea-02d1-8008-b191-cf5f1c148d26" class="">
+</p><p id="116394ea-02d1-80a1-8bd5-f291c188840f" class="">
+</p><h1 id="116394ea-02d1-80b2-abea-e4c475c8cdba" class=""><strong>Alpha-Beta Pruning </strong></h1><ul id="116394ea-02d1-8024-a066-dec6a83c5973" class="bulleted-list"><li style="list-style-type:disc">It is an optimization technique for a minimax algorithm.</li></ul><ul id="116394ea-02d1-80bd-9443-f3c29acdf9fb" class="bulleted-list"><li style="list-style-type:disc">It reduces computation time by a huge factor, allowing the user to traverse faster and deeper into the tree.</li></ul><ul id="116394ea-02d1-8080-9aa8-d89f25270fcc" class="bulleted-list"><li style="list-style-type:disc">It stops evaluating when at least one possibility has been found that typically proves the move to be worse than the previously examined move.</li></ul><ul id="116394ea-02d1-8066-afaa-fa9faca36e68" class="bulleted-list"><li style="list-style-type:disc">The minimax search is based on depth-first search which considers the nodes along a single path in a tree. But alpha-beta pruning bonds with two major parameters in <code>MAX-VALUE(state, alpha, beta)</code>, representing Alpha plays a maximizer role, whereas Beta plays a minimizer role.</li></ul><p id="116394ea-02d1-80bb-a853-cd82ecb3c6f5" class=""><strong>Alpha-Beta Pruning Concepts:</strong></p><ul id="116394ea-02d1-80e1-be23-c0208e3b00e4" class="bulleted-list"><li style="list-style-type:disc"><strong>Alpha</strong>: Denotes the value of the best or highest value.</li></ul><ul id="116394ea-02d1-80d4-b775-ecf179d7499a" class="bulleted-list"><li style="list-style-type:disc"><strong>Beta</strong>: Denotes the value of the best or lowest value.</li></ul><ul id="116394ea-02d1-8088-a96d-cb817be67c6f" class="bulleted-list"><li style="list-style-type:disc">By efficiently pruning away branches of the tree that are known to be irrelevant, alpha-beta pruning dramatically speeds up the search process, making it an essential component of game-playing AI.</li></ul><p id="116394ea-02d1-802c-8e66-e1e2fb7e0230" class=""><strong>Explanation of Alpha and Beta:</strong></p><ul id="116394ea-02d1-8072-b9c6-f0ea7109cb1a" class="bulleted-list"><li style="list-style-type:disc"><strong>Alpha (α)</strong>: This represents the best value achievable by the maximizing player (Max) along the path from the root to the current state.</li></ul><ul id="116394ea-02d1-8082-8ca2-eb78217d99da" class="bulleted-list"><li style="list-style-type:disc"><strong>Beta (β)</strong>: This represents the best value achievable by the minimizing player (Min) along the path from the root to the current state.</li></ul><ul id="116394ea-02d1-80fa-b410-df1e3658ee80" class="bulleted-list"><li style="list-style-type:disc">As the search progresses, the algorithm continuously updates alpha and beta to maintain the best-known values for Max and Min.</li></ul><ul id="116394ea-02d1-8042-8098-cfd146bca86b" class="bulleted-list"><li style="list-style-type:disc">When Max is considering a move, it updates alpha with the maximum value found so far. If alpha becomes greater than or equal to beta (α ≥ β), Max knows that the opponent (Min) will never allow this move, and there&#x27;s no need to explore further. Therefore, the algorithm prunes the rest of the subtree under this node.</li></ul><p id="116394ea-02d1-80a9-bc63-e9df5029891d" class=""><strong>Alpha-Beta Pruning for Min:</strong></p><ul id="116394ea-02d1-8064-b229-d6ce9340416b" class="bulleted-list"><li style="list-style-type:disc">Similarly, when Min is considering a move, it updates beta with the minimum value found. If beta becomes less than or equal to alpha (β ≤ α), Min knows that Max will never allow this move, and the algorithm prunes the subtree.</li></ul><ul id="116394ea-02d1-8053-80d7-c0f544d67d91" class="bulleted-list"><li style="list-style-type:disc"><strong>α (alpha) = 9</strong>, which is the best value Max has seen.</li></ul><ul id="116394ea-02d1-8032-a300-e7248f08f219" class="bulleted-list"><li style="list-style-type:disc">The algorithm now knows that Min will not choose values greater than or equal to 9 because doing so would lead to pruning in Max&#x27;s earlier moves. As a result, Min&#x27;s options are irrelevant, and the remaining branches can be pruned.</li></ul><p id="116394ea-02d1-8003-a0cc-c73b49aacb70" class="">
+</p><h1 id="116394ea-02d1-8026-933e-ce047d4b6c6c" class=""><strong>Case Study: Cybersecurity Threat Detection 🔐🛡️</strong></h1><ul id="116394ea-02d1-806d-a709-c791e83fe1ea" class="bulleted-list"><li style="list-style-type:disc"><strong>Scenario</strong>:<p id="116394ea-02d1-8098-8c75-f211bcb2e52e" class="">In the realm of cybersecurity, organizations face a constant adversarial battle ⚔️ against cyber threats and attackers. Adversarial search is used to model and mitigate these threats efficiently.</p></li></ul><ul id="116394ea-02d1-807a-85cc-e50e2b830dab" class="bulleted-list"><li style="list-style-type:disc"><strong>Application</strong>:<p id="116394ea-02d1-8020-b7f3-fcc23c011c36" class="">Consider an organization that employs adversarial search to enhance its threat detection system. In this case:</p><ul id="116394ea-02d1-80e7-994a-efc00cb156c3" class="bulleted-list"><li style="list-style-type:circle"><strong>Maximizing Player (Defender) 🛡️</strong>:<p id="116394ea-02d1-80de-a038-fb55d3177b30" class="">The organization plays the role of the maximizing player (Max) and seeks to maximize the security 🔒 of its systems and protect its data.</p></li></ul><ul id="116394ea-02d1-8056-a3cd-ec117c6da9f3" class="bulleted-list"><li style="list-style-type:circle"><strong>Minimizing Player (Attacker) 🐍</strong>:<p id="116394ea-02d1-8050-bafa-d75f0e95cdca" class="">The attacker, who may be a hacker or malicious entity, is the minimizing player (Min), aiming to exploit vulnerabilities 🕳️ and breach the organization&#x27;s security.</p></li></ul></li></ul></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

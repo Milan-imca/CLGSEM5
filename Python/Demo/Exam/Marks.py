@@ -1,0 +1,2 @@
+def printMarks():
+  print("Marks")
