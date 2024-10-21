@@ -1,57 +1,74 @@
 #include <iostream>
-#include <cmath>
 using namespace std;
 
 // Function to calculate gcd
 int gcd(int a, int b)
 {
-  while (b)
-  {
-    a %= b;
-    swap(a, b);
-  }
-  return a;
+    while (b)
+    {
+        a %= b;
+        swap(a, b);
+    }
+    return a;
+}
+
+// Function for modular exponentiation (a^b % mod)
+int modExp(int base, int exp, int mod)
+{
+    int result = 1;
+    base = base % mod;  // Take base modulo mod to prevent overflow
+    while (exp > 0)
+    {
+        if (exp % 2 == 1)  // If exp is odd
+            result = (result * base) % mod;
+        exp = exp >> 1;  // exp = exp / 2
+        base = (base * base) % mod;  // Square the base
+    }
+    return result;
 }
 
 int main()
 {
-  // Two prime numbers
-  int p = 13, q = 11;
-  int n = p * q, phi = (p - 1) * (q - 1), e = 7;
+    // Two prime numbers
+    int p = 13, q = 21;
+    int n = p * q, phi = (p - 1) * (q - 1), e = 13;
 
-  // Ensure e and phi are coprime
-  while (gcd(e, phi) != 1)
-    e++;
+    // Ensure e and phi are coprime
+    while (gcd(e, phi) != 1)
+        e++;
 
-  // Calculate d (modular inverse of e)
-  int d = 1;
-  while ((d * e) % phi != 1)
-    d++;
+    // Calculate d (modular inverse of e)
+    int d = 1;
+    while ((d * e) % phi != 1)
+        d++;
 
-  int message = 9;
-  int c = (int)pow(message, e) % n; // Encrypt
-  int m = (int)pow(c, d) % n;       // Decrypt
+    int message = 13;  // Message to be encrypted
 
-  // Output the results
-  cout << "Original Message = " << message << "\n"
-       << "p = " << p << "\n"
-       << "q = " << q << "\n"
-       << "n = pq = " << n << "\n"
-       << "phi = " << phi << "\n"
-       << "e = " << e << "\n"
-       << "d = " << d << "\n"
-       << "Encrypted message = " << c << "\n"
-       << "Decrypted message = " << m << "\n";
+    // Encrypt the message
+    int c = modExp(message, e, n);  // Modular exponentiation for encryption
+    // Decrypt the message
+    int m = modExp(c, d, n);        // Modular exponentiation for decryption
 
-  // Check if the decrypted message matches the original message
-  if (m == message)
-  {
-    cout << "RSA worked successfully!" << endl;
-  }
-  else
-  {
-    cout << "Error: RSA failed!" << endl;
-  }
+    // Output the results
+    cout << "Original Message = " << message << "\n"
+         << "p = " << p << "\n"
+         << "q = " << q << "\n"
+         << "n = pq = " << n << "\n"
+         << "phi = " << phi << "\n"
+         << "e = " << e << "\n"
+         << "d = " << d << "\n"
+         << "Encrypted message = " << c << "\n"
+         << "Decrypted message = " << m << "\n";
 
-  return 0;
+    // Check if the decrypted message matches the original message
+    if (m == message)
+    {
+        cout << "RSA worked successfully!" << endl;
+    }
+    else
+    {
+        cout << "Error: RSA failed!" << endl;
+    }
+
+    return 0;
 }
