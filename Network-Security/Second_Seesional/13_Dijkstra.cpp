@@ -83,4 +83,12 @@ Enter the edges (u, v, weight) for each edge:
 3 4 9
 Enter the source node: 0
 
+
+Shortest distances from node 0:
+Node 0: 0
+Node 1: 7
+Node 2: 8
+Node 3: 12
+Node 4: 5
+
 */
