@@ -1,4 +1,3 @@
-//RSA algorithm
 #include <iostream>
 using namespace std;
 
@@ -32,16 +31,23 @@ int main()
 {
   // Two prime numbers
   int p = 13, q = 21;
-  int n = p * q, phi = (p - 1) * (q - 1), e = 13;
+  int n = p * q, phi = (p - 1) * (q - 1), e = 6;  // Test case with invalid `e`
 
-  // Ensure e and phi are coprime
-  while (gcd(e, phi) != 1)
-    e++;
+  // Ensure `e` is coprime with `phi`
+  if (gcd(e, phi) != 1) {
+    cout << "Error: 'e' is not coprime with phi(n). RSA will fail!" << endl;
+    return 1;  // Exit with error code
+  }
 
-  // Calculate d (modular inverse of e)
+  // Calculate d (modular inverse of `e`)
   int d = 1;
-  while ((d * e) % phi != 1)
+  while ((d * e) % phi != 1) {
     d++;
+    if (d > phi) {  // No valid d found (fail scenario)
+      cout << "Error: No valid modular inverse for 'e'. RSA will fail!" << endl;
+      return 1;
+    }
+  }
 
   int message = 13; // Message to be encrypted
 
